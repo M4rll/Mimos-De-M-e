@@ -26,6 +26,7 @@
             background-color: var(--cor-fundo);
             color: var(--cor-texto);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         .container {
@@ -81,6 +82,12 @@
             width: 100%;
             top: 0;
             z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(255, 255, 255, 0.95);
         }
         
         .header-container {
@@ -88,6 +95,11 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
+            transition: all 0.3s;
+        }
+        
+        header.scrolled .header-container {
+            padding: 10px 0;
         }
         
         .logo {
@@ -116,6 +128,22 @@
             color: var(--cor-texto);
             font-weight: 500;
             transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--cor-primaria);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
         }
         
         nav ul li a:hover {
@@ -137,17 +165,20 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 0 20px;
+            animation: fadeIn 1.5s ease;
         }
         
         .hero h1 {
             font-size: 48px;
             margin-bottom: 20px;
             font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
         .hero p {
             font-size: 20px;
             margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         
         /* Sobre */
@@ -201,10 +232,23 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s;
+            position: relative;
         }
         
         .product-card:hover {
             transform: translateY(-10px);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--cor-primaria);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 2;
         }
         
         .product-image {
@@ -243,6 +287,34 @@
             font-size: 18px;
         }
         
+        /* Destaques */
+        .highlights {
+            padding: 80px 0;
+            background-color: var(--cor-branco);
+        }
+        
+        .highlights-container {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        
+        .highlight-item {
+            flex: 1;
+            padding: 0 20px;
+        }
+        
+        .highlight-icon {
+            font-size: 40px;
+            color: var(--cor-primaria);
+            margin-bottom: 20px;
+        }
+        
+        .highlight-item h3 {
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
         /* Contato */
         .contact {
             padding: 100px 0;
@@ -276,6 +348,7 @@
         .contact-details i {
             margin-right: 10px;
             color: var(--cor-primaria);
+            width: 20px;
         }
         
         .contact-form input, .contact-form textarea {
@@ -285,6 +358,12 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: var(--cor-primaria);
+            outline: none;
         }
         
         .contact-form textarea {
@@ -353,6 +432,12 @@
             border-top: 1px solid rgba(255,255,255,0.1);
         }
         
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         /* Responsividade */
         @media (max-width: 768px) {
             .header-container {
@@ -361,6 +446,12 @@
             
             nav ul {
                 margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px 10px;
             }
             
             .about-content, .contact-container {
@@ -369,6 +460,11 @@
             
             .hero h1 {
                 font-size: 36px;
+            }
+            
+            .highlights-container {
+                flex-direction: column;
+                gap: 40px;
             }
             
             .footer-content {
@@ -388,6 +484,7 @@
                     <li><a href="#home">Início</a></li>
                     <li><a href="#about">Sobre</a></li>
                     <li><a href="#products">Produtos</a></li>
+                    <li><a href="#highlights">Destaques</a></li>
                     <li><a href="#contact">Contato</a></li>
                 </ul>
             </nav>
@@ -427,6 +524,7 @@
             <h2 class="section-title">Nossas Delícias</h2>
             <div class="products-grid">
                 <div class="product-card">
+                    <div class="product-badge">Mais Vendido</div>
                     <div class="product-image">
                         <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Bolo de chocolate">
                     </div>
@@ -439,7 +537,7 @@
                 
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Cupcakes">
+                        <img src="https://images.unsplash.com/photo-1596223575327-99a5be4faf1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Cupcakes">
                     </div>
                     <div class="product-info">
                         <h3>Cupcakes Gourmet</h3>
@@ -449,13 +547,14 @@
                 </div>
                 
                 <div class="product-card">
+                    <div class="product-badge">Novidade</div>
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Cookies">
+                        <img src="https://images.unsplash.com/photo-1623334044303-241021148842?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Macarons">
                     </div>
                     <div class="product-info">
-                        <h3>Cookies Artesanais</h3>
-                        <p>Cookies crocantes por fora e macios por dentro, com gotas de chocolate.</p>
-                        <p class="price">R$ 4,50 (unidade)</p>
+                        <h3>Macarons Coloridos</h3>
+                        <p>Macarons delicados com recheios cremosos e diversas cores e sabores.</p>
+                        <p class="price">R$ 6,00 (unidade)</p>
                     </div>
                 </div>
                 
@@ -472,7 +571,7 @@
                 
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1519869325930-281384150729?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Brigadeiros">
+                        <img src="https://images.unsplash.com/photo-1603532648955-039310d9ed75?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Brigadeiros">
                     </div>
                     <div class="product-info">
                         <h3>Brigadeiros Especiais</h3>
@@ -483,13 +582,43 @@
                 
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Brownie">
+                        <img src="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Brownie">
                     </div>
                     <div class="product-info">
                         <h3>Brownie de Nozes</h3>
                         <p>Brownie intenso de chocolate com pedaços de nozes e uma casquinha crocante.</p>
                         <p class="price">R$ 7,00 (fatia)</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destaques -->
+    <section class="highlights" id="highlights">
+        <div class="container">
+            <h2 class="section-title">Por que nos escolher?</h2>
+            <div class="highlights-container">
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Feito com Amor</h3>
+                    <p>Cada doce é preparado com carinho e atenção aos detalhes</p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Ingredientes Naturais</h3>
+                    <p>Utilizamos apenas ingredientes frescos e de alta qualidade</p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Qualidade Garantida</h3>
+                    <p>Compromisso com a excelência em cada produto</p>
                 </div>
             </div>
         </div>
@@ -516,7 +645,7 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form>
+                    <form id="contactForm">
                         <input type="text" placeholder="Seu nome" required>
                         <input type="email" placeholder="Seu e-mail" required>
                         <input type="tel" placeholder="Seu telefone">
@@ -572,6 +701,16 @@
             });
         });
         
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
         // Efeito de fade-in para as seções ao rolar
         const observerOptions = {
             threshold: 0.1
@@ -587,11 +726,18 @@
         }, observerOptions);
         
         // Aplicar efeito às seções
-        document.querySelectorAll('.about, .products, .contact').forEach(section => {
+        document.querySelectorAll('.about, .products, .highlights, .contact').forEach(section => {
             section.style.opacity = 0;
             section.style.transform = 'translateY(20px)';
             section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
             observer.observe(section);
+        });
+        
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Obrigada pelo seu contato! Em breve retornaremos sua mensagem.');
+            this.reset();
         });
     </script>
 </body>
